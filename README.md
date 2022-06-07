@@ -1,40 +1,32 @@
 # Project 3
-Central Views 
-Admin Home 
-    - Delete
+1. Search<br/>
+    Hassan - <br/>
+    Justin - <br/>
+    Joesph - <br/>
+    Mohamed - <br/>
 
-Home (user)
-    - search
-    - featured products
+2. Create / Delete / Update<br/>
+    Philip - Lead<br/>
+    Jaya -<br/>
+    Parth - <br/>
+    Hailey -<br/>
 
-1. Search
-    Hassan - 
-    Justin - 
-    Joesph - git hubber
-    Mohamed - 
+3. Chat<br/>
+    Chime <br/>
+    Nabil <br/>
+    Milan - Lead<br/>
+    Lilianne <br/>
+    Victor <br/>
+    Swathi <br/>
 
-2. Create / Delete / Update
-    Philip - team lead git
-    Jaya -
-    Parth - 
-    Hailey -
+4. Input Validation / UX-UI Error handling<br/>
+    Darryl - Lead 2*<br/>
+    Kenneth<br/>
+    Dawit<br/>
+    Mohammad<br/>
+    Bayode<br/>
 
-3. Chat
-    Chime 
-    Nabil
-    Milan - team lead 1
-    Lilianne
-    Victor
-    Swathi
-
-4. Input Validation / UX-UI Error handling
-    Darryl - team lead 2*
-    Kenneth
-    Dawit
-    Mohammad
-    Bayode
-
-6. Front-End Styling
+6. Front-End Styling<br/>
 
 7. Jenkins
     Darryl
