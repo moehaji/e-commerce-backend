@@ -86,7 +86,7 @@ public class ProductController {
     }
 
     @Authorized
-    @PutMapping
+    @PutMapping("/update")
     public ResponseEntity<Product> updateProduct(@RequestBody Product product){
         return ResponseEntity.ok(productService.update(product));
     }
