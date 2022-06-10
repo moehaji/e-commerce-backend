@@ -1,4 +1,4 @@
-package com.revature.messagingstompwebsocket;
+package com.revature.models;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -11,8 +11,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "messages")
-public class HelloMessage {
-
+public class Messages {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
