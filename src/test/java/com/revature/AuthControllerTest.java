@@ -1,4 +1,4 @@
-/*package com.revature;
+package com.revature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.revature.dtos.LoginRequest;
 import com.revature.dtos.RegisterRequest;
@@ -67,7 +67,7 @@ public class AuthControllerTest {
         mockMvc.perform(post("/auth/login").contentType(MediaType.APPLICATION_JSON).content(om.writeValueAsString(loginRequest))
                 ).andDo(print()).andExpect(status().isOk()).andExpect(jsonPath("$.email").value("testuser@gmail.com"))
                 .andExpect(jsonPath("$.password").value("")).andExpect(jsonPath("$.firstName").value("a"))
-                .andExpect(jsonPath("$.lastName").value("b")).andExpect(jsonPath("$.admin").value(false)).andExpect(jsonPath("$.id").value(3));
+                .andExpect(jsonPath("$.lastName").value("b")).andExpect(jsonPath("$.admin").value(false));
     }
 
     @Test
@@ -90,7 +90,7 @@ public class AuthControllerTest {
         mockMvc.perform(post("/auth/register").contentType(MediaType.APPLICATION_JSON).content(om.writeValueAsString(registerRequest))
                 ).andDo(print()).andExpect(status().isCreated()).andExpect(jsonPath("$.email").value("test"))
                 .andExpect(jsonPath("$.password").value("")).andExpect(jsonPath("$.firstName").value("a"))
-                .andExpect(jsonPath("$.lastName").value("b")).andExpect(jsonPath("$.admin").value(false)).andExpect(jsonPath("$.id").value(3));
+                .andExpect(jsonPath("$.lastName").value("b")).andExpect(jsonPath("$.admin").value(false));
     }
 
     @Test
@@ -149,6 +149,5 @@ public class AuthControllerTest {
         String result = content.getResponse().getContentAsString();
         assertEquals("3",result);
     }
-
 }
-*/
+
