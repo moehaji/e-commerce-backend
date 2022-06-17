@@ -10,11 +10,11 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
+
 public class UserServiceTesting {
-
-
     @BeforeEach
     public void registrationBeforeTest(){
         MockitoAnnotations.openMocks(this);
@@ -27,7 +27,6 @@ public class UserServiceTesting {
     static UserService us;
 
     @Test
-
     public void findByCredentialsTest(){
         UserService uss = new UserService(ur);
         Optional<User> u = Optional.of(new User(0,"a","b","c","d",false));
