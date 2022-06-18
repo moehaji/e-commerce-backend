@@ -1,4 +1,3 @@
-/*
 package com.revature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.revature.controllers.ChatController;
@@ -108,4 +107,4 @@ public class ChatControllerTest {
     }
 
 }
-*/
+
