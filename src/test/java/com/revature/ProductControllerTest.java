@@ -17,25 +17,27 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+@DirtiesContext(classMode= DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK, classes = ECommerceApplication.class)
 @AutoConfigureMockMvc
 @AutoConfigureTestDatabase
 @ActiveProfiles("test")
 public class ProductControllerTest {
 
+    private final ObjectMapper om = new ObjectMapper();
     @Autowired
     private MockMvc mockMvc;
-
     @Autowired
     private ProductRepository pr;
-    private final ObjectMapper om = new ObjectMapper();
 
     @BeforeEach
     public void resetDB() {
@@ -156,8 +158,6 @@ public class ProductControllerTest {
     @Test
     @Transactional
     public void deleteFailedTest() throws Exception {
-
-        //Product p = new Product();
         User u = new User();
 
         HashMap<String, Object> sessionAttr = new HashMap<String, Object>();
@@ -166,4 +166,17 @@ public class ProductControllerTest {
         ).andDo(print()).andExpect(status().isNotFound());
     }
 
+    @Test
+    @Transactional
+    public void deletePassTest() throws Exception {
+        Product dbItem = new Product(1, 1, 1.0, "a", "b", "c", "d", false, false);
+        User u = new User();
+
+        pr.save(dbItem);
+
+        HashMap<String, Object> sessionAttr = new HashMap<String, Object>();
+        sessionAttr.put("user", u);
+        mockMvc.perform(delete("/api/product/1").sessionAttrs(sessionAttr)
+        ).andDo(print()).andExpect(status().isOk());
+    }
 }
