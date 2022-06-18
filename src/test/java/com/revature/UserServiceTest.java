@@ -38,7 +38,4 @@ public class UserServiceTest {
         assertEquals("test_last",test.get().getLastName(), "pass");
         assertEquals(false,test.get().isAdmin(), "pass");
     }
-
-    @Test
-    public void
 }
