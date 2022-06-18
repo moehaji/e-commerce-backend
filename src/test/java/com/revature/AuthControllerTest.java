@@ -41,7 +41,6 @@ public class AuthControllerTest {
     @Transactional
     public void loginTest()throws Exception{
         LoginRequest loginRequest = new LoginRequest("testuser@gmail.com","password");
-        //HttpSession session = new MockHttpSession();
         User u = new User(0,"testuser@gmail.com","password","a","b",false);
         ur.save(u);
         mockMvc.perform(post("/auth/login").contentType(MediaType.APPLICATION_JSON).content(om.writeValueAsString(loginRequest))
@@ -64,7 +63,6 @@ public class AuthControllerTest {
     @Transactional
     public void saveUserTest()throws Exception{
         RegisterRequest registerRequest = new RegisterRequest("test","pass","a","b",false);
-
         mockMvc.perform(post("/auth/register").contentType(MediaType.APPLICATION_JSON).content(om.writeValueAsString(registerRequest))
                 ).andDo(print()).andExpect(status().isCreated()).andExpect(jsonPath("$.email").value("test"))
                 .andExpect(jsonPath("$.password").value("")).andExpect(jsonPath("$.firstName").value("a"))

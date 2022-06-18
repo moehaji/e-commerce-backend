@@ -1,4 +1,5 @@
 package com.revature;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.revature.dtos.ProductInfo;
 import com.revature.models.Product;
@@ -33,19 +34,18 @@ public class ProductControllerTest {
 
     @Autowired
     private ProductRepository pr;
+    private final ObjectMapper om = new ObjectMapper();
 
     @BeforeEach
     public void resetDB() {
         pr.deleteAll();
     }
 
-    private ObjectMapper om = new ObjectMapper();
-
     @Test
     @Transactional
-    public void updateProductTest()throws Exception{
+    public void updateProductTest() throws Exception {
         Product p = new Product();
-        Product pt = new Product(6,1,1.0,"a","b","c", "d", false, false);
+        Product pt = new Product(6, 1, 1.0, "a", "b", "c", "d", false, false);
         User u = new User();
         p.setId(0);
         p.setQuantity(2);
@@ -66,34 +66,32 @@ public class ProductControllerTest {
                 .andExpect(jsonPath("$.description").value("a")).andExpect(jsonPath("$.image").value("b"))
                 .andExpect(jsonPath("$.name").value("c"))
                 .andExpect(jsonPath("$.category").value("d"))
-               .andExpect(jsonPath("$.discontinued").value(false))
+                .andExpect(jsonPath("$.discontinued").value(false))
                 .andExpect(jsonPath("$.featured").value(false));
     }
 
     @Test
     @Transactional
-    public void getInventoryTest()throws Exception{
+    public void getInventoryTest() throws Exception {
 
-        Product p = new Product(0,1,1.0,"a","b","c", "d", false, false);
+        Product p = new Product(0, 1, 1.0, "a", "b", "c", "d", false, false);
         User u = new User();
         pr.save(p);
         HashMap<String, Object> sessionAttr = new HashMap<String, Object>();
         sessionAttr.put("user", u);
         mockMvc.perform(get("/api/product").sessionAttrs(sessionAttr)
-        ).andDo(print()).andExpect(status().isOk())
+                ).andDo(print()).andExpect(status().isOk())
                 .andExpect(jsonPath("$.[0].quantity").value(1)).andExpect(jsonPath("$.[0].price").value(1.0))
                 .andExpect(jsonPath("$.[0].description").value("a")).andExpect(jsonPath("$.[0].image").value("b"))
-               .andExpect(jsonPath("$.[0].name").value("c"))
+                .andExpect(jsonPath("$.[0].name").value("c"))
                 .andExpect(jsonPath("$.[0].category").value("d"))
-               .andExpect(jsonPath("$.[0].discontinued").value(false))
-               .andExpect(jsonPath("$.[0].featured").value(false));
+                .andExpect(jsonPath("$.[0].discontinued").value(false))
+                .andExpect(jsonPath("$.[0].featured").value(false));
     }
 
     @Test
     @Transactional
-    public void getItemByIdFailedTest()throws Exception {
-
-        //Product p = new Product();
+    public void getItemByIdFailedTest() throws Exception {
         User u = new User();
 
         HashMap<String, Object> sessionAttr = new HashMap<String, Object>();
@@ -104,7 +102,7 @@ public class ProductControllerTest {
 
     @Test
     @Transactional
-    public void purchaseFailedTest()throws Exception {
+    public void purchaseFailedTest() throws Exception {
         List<ProductInfo> lp = new ArrayList<ProductInfo>();
         ProductInfo p = new ProductInfo();
         lp.add(p);
@@ -118,7 +116,26 @@ public class ProductControllerTest {
 
     @Test
     @Transactional
-    public void deleteFailedTest()throws Exception {
+    public void purchaseBadRequestTest() throws Exception {
+        List<ProductInfo> lp = new ArrayList<ProductInfo>();
+        ProductInfo p = new ProductInfo(1, 5);
+        Product dbItem = new Product(0, 1, 1.0, "a", "b", "c", "d", false, false);
+        lp.add(p);
+
+        pr.save(dbItem);
+        User u = new User();
+
+        HashMap<String, Object> sessionAttr = new HashMap<String, Object>();
+        sessionAttr.put("user", u);
+
+        mockMvc.perform(patch("/api/product/").sessionAttrs(sessionAttr).contentType(MediaType.APPLICATION_JSON).content(om.writeValueAsString(lp)))
+                .andDo(print())
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    @Transactional
+    public void deleteFailedTest() throws Exception {
 
         //Product p = new Product();
         User u = new User();
