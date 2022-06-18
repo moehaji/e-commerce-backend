@@ -63,8 +63,6 @@ public class AuthController {
     public ResponseEntity<Integer> checkLogin(HttpSession session) {
         User u = (User)session.getAttribute("user");
         
-        System.out.println(u.toString());
-        
         if(u == null){
             return ResponseEntity.status(HttpStatus.OK).body(1);
         } else  if(!u.isAdmin()){

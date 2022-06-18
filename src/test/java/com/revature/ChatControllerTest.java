@@ -94,7 +94,6 @@ public class ChatControllerTest {
 
     @Test
     public void recMessageTest() throws Exception{
-
         Message m = new Message("a","b","c","d",MESSAGE);
         Message test = cc.recMessage(m);
         assertEquals("b",test.getReceiverName(),"pass");

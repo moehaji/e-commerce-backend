@@ -10,7 +10,10 @@ import com.revature.services.UserService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.actuate.trace.http.HttpTrace;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -82,24 +85,54 @@ public class AuthControllerTest {
     @Transactional
     public void saveUserTest()throws Exception{
         RegisterRequest registerRequest = new RegisterRequest("test","pass","a","b",false);
-        //HttpSession session = new MockHttpSession();
-        //User u = new User(0,"test","pass","a","b",false);
-        //ur.saveAndFlush(u);
+
         mockMvc.perform(post("/auth/register").contentType(MediaType.APPLICATION_JSON).content(om.writeValueAsString(registerRequest))
                 ).andDo(print()).andExpect(status().isCreated()).andExpect(jsonPath("$.email").value("test"))
                 .andExpect(jsonPath("$.password").value("")).andExpect(jsonPath("$.firstName").value("a"))
                 .andExpect(jsonPath("$.lastName").value("b")).andExpect(jsonPath("$.admin").value(false));
     }
-
     @Test
     @Transactional
     public void failedSaveUserTest()throws Exception{
         RegisterRequest registerRequest = new RegisterRequest("test","pass","a","b",false);
-        //HttpSession session = new MockHttpSession();
         User u = new User(0,"test","pass","a","b",false);
         ur.save(u);
         mockMvc.perform(post("/auth/register").contentType(MediaType.APPLICATION_JSON).content(om.writeValueAsString(registerRequest))
         ).andDo(print()).andExpect(status().isConflict());
+    }
+
+    //test admin scenario
+    @Test
+    public void checkLoginAdminTest() throws Exception {
+        User u = new User(0,"test","pass","a","b",true);
+        MockHttpSession session = new MockHttpSession();
+        session.setAttribute("user",u);
+
+        mockMvc.perform(get("/auth/checkLogin").session(session))
+                .andDo(print())
+                .andExpect(status().isOk()).andExpect(jsonPath("$").value(3));
+
+    }
+    @Test
+    public void checkLoginUserTest() throws Exception {
+        User u = new User(0,"test","pass","a","b",false);
+        MockHttpSession session = new MockHttpSession();
+        session.setAttribute("user",u);
+
+        mockMvc.perform(get("/auth/checkLogin").session(session))
+                .andDo(print())
+                .andExpect(status().isOk()).andExpect(jsonPath("$").value(2));
+
+    }
+    @Test
+    public void checkLoginGuestTest() throws Exception {
+        User u = new User(0,"test","pass","a","b",false);
+        MockHttpSession session = new MockHttpSession();
+
+        mockMvc.perform(get("/auth/checkLogin").session(session))
+                .andDo(print())
+                .andExpect(status().isOk()).andExpect(jsonPath("$").value(1));
+
     }
 }
 
