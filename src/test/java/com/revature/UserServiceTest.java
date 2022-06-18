@@ -16,21 +16,16 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 @SpringBootTest
 public class UserServiceTest {
-
-
     @BeforeEach
     public void registrationBeforeTest(){
         MockitoAnnotations.openMocks(this);
     }
-
     @Mock
     static UserRepository ur;
 
     @InjectMocks
     static UserService us;
-
     @Test
-
     public void findByCredentialsTest(){
         UserService uss = new UserService(ur);
         Optional<User> u = Optional.of(new User(0,"test@gmail.com","password","test_first","test_last",false));
@@ -43,4 +38,7 @@ public class UserServiceTest {
         assertEquals("test_last",test.get().getLastName(), "pass");
         assertEquals(false,test.get().isAdmin(), "pass");
     }
+
+    @Test
+    public void
 }
