@@ -12,6 +12,7 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
@@ -119,7 +120,7 @@ public class ProductControllerTest {
     public void purchaseBadRequestTest() throws Exception {
         List<ProductInfo> lp = new ArrayList<ProductInfo>();
         ProductInfo p = new ProductInfo(1, 5);
-        Product dbItem = new Product(0, 1, 1.0, "a", "b", "c", "d", false, false);
+        Product dbItem = new Product(1, 1, 1.0, "a", "b", "c", "d", false, false);
         lp.add(p);
 
         pr.save(dbItem);
@@ -131,6 +132,25 @@ public class ProductControllerTest {
         mockMvc.perform(patch("/api/product/").sessionAttrs(sessionAttr).contentType(MediaType.APPLICATION_JSON).content(om.writeValueAsString(lp)))
                 .andDo(print())
                 .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    @Transactional
+    public void purchaseTest() throws Exception {
+        List<ProductInfo> lp = new ArrayList<ProductInfo>();
+        ProductInfo p = new ProductInfo(1, 1);
+        Product dbItem = new Product(1, 1, 1.0, "a", "b", "c", "d", false, false);
+        lp.add(p);
+
+        pr.save(dbItem);
+        User u = new User();
+
+        HashMap<String, Object> sessionAttr = new HashMap<String, Object>();
+        sessionAttr.put("user", u);
+
+        mockMvc.perform(patch("/api/product/").sessionAttrs(sessionAttr).contentType(MediaType.APPLICATION_JSON).content(om.writeValueAsString(lp)))
+                .andDo(print())
+                .andExpect(status().isOk());
     }
 
     @Test
