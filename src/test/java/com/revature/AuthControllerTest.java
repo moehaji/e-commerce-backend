@@ -111,7 +111,18 @@ public class AuthControllerTest {
         mockMvc.perform(get("/auth/checkLogin").session(session))
                 .andDo(print())
                 .andExpect(status().isOk()).andExpect(jsonPath("$").value(1));
+    }
 
+    @Test
+    public void getUserTest() throws Exception {
+        User u = new User(0,"test","pass","test_first","test_last",false);
+        MockHttpSession session = new MockHttpSession();
+        session.setAttribute("user",u);
+
+        mockMvc.perform(get("/auth/getUser").session(session))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.firstName").value("test_first"));
     }
 
     @Test
@@ -123,7 +134,6 @@ public class AuthControllerTest {
         mockMvc.perform(post("/auth/logout").session(session))
                 .andDo(print())
                 .andExpect(status().isOk());
-
     }
 }
 
