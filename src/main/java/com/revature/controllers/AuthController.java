@@ -27,7 +27,7 @@ public class AuthController {
     public ResponseEntity<User> login(@RequestBody LoginRequest loginRequest, HttpSession session) {
         Optional<User> optional = authService.findByCredentials(loginRequest.getEmail(), loginRequest.getPassword());
 
-        if(!optional.isPresent()) {
+        if (!optional.isPresent()) {
             return ResponseEntity.badRequest().build();
         }
         optional.get().setPassword("");
@@ -51,33 +51,32 @@ public class AuthController {
                 registerRequest.getFirstName(),
                 registerRequest.getLastName(),
                 registerRequest.isAdmin());
-                created = authService.register(created);
-                if(created == null){
-                    return ResponseEntity.status(HttpStatus.CONFLICT).body(null);
-                }else {
-                created.setPassword("");
-        return ResponseEntity.status(HttpStatus.CREATED).body(created);}
+        created = authService.register(created);
+        if (created == null) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(null);
+        } else {
+            created.setPassword("");
+            return ResponseEntity.status(HttpStatus.CREATED).body(created);
+        }
     }
 
     @GetMapping("/checkLogin")
     public ResponseEntity<Integer> checkLogin(HttpSession session) {
-        User u = (User)session.getAttribute("user");
-        
-        if(u == null){
+        User u = (User) session.getAttribute("user");
+
+        if (u == null) {
             return ResponseEntity.status(HttpStatus.OK).body(1);
-        } else  if(!u.isAdmin()){
+        } else if (!u.isAdmin()) {
             return ResponseEntity.status(HttpStatus.OK).body(2);
-        }else {
+        } else {
             return ResponseEntity.status(HttpStatus.OK).body(3);
         }
     }
 
     @GetMapping("/getUser")
     public ResponseEntity<User> getUser(HttpSession session) {
-
-        User u = (User)session.getAttribute("user");
+        User u = (User) session.getAttribute("user");
         System.out.println(u.toString());
         return ResponseEntity.status(HttpStatus.OK).body(u);
-
     }
 }
