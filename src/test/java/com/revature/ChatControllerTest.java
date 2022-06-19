@@ -1,4 +1,3 @@
-/*
 package com.revature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.revature.controllers.ChatController;
@@ -95,7 +94,6 @@ public class ChatControllerTest {
 
     @Test
     public void recMessageTest() throws Exception{
-
         Message m = new Message("a","b","c","d",MESSAGE);
         Message test = cc.recMessage(m);
         assertEquals("b",test.getReceiverName(),"pass");
@@ -108,4 +106,4 @@ public class ChatControllerTest {
     }
 
 }
-*/
+
