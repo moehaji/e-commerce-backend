@@ -79,7 +79,7 @@ public class AuthControllerTest {
     }
 
     //test admin scenario
-    @Test
+/*    @Test
     public void checkLoginAdminTest() throws Exception {
         User u = new User(0,"test","pass","a","b",true);
         MockHttpSession session = new MockHttpSession();
@@ -89,8 +89,8 @@ public class AuthControllerTest {
                 .andDo(print())
                 .andExpect(status().isOk()).andExpect(jsonPath("$").value(3));
 
-    }
-    @Test
+    }*/
+/*    @Test
     public void checkLoginUserTest() throws Exception {
         User u = new User(0,"test","pass","a","b",false);
         MockHttpSession session = new MockHttpSession();
@@ -100,8 +100,8 @@ public class AuthControllerTest {
                 .andDo(print())
                 .andExpect(status().isOk()).andExpect(jsonPath("$").value(2));
 
-    }
-    @Test
+    }*/
+/*    @Test
     public void checkLoginGuestTest() throws Exception {
         User u = new User(0,"test","pass","a","b",false);
         MockHttpSession session = new MockHttpSession();
@@ -109,9 +109,9 @@ public class AuthControllerTest {
         mockMvc.perform(get("/auth/checkLogin").session(session))
                 .andDo(print())
                 .andExpect(status().isOk()).andExpect(jsonPath("$").value(1));
-    }
+    }*/
 
-    @Test
+/*    @Test
     public void getUserTest() throws Exception {
         User u = new User(0,"test","pass","test_first","test_last",false);
         MockHttpSession session = new MockHttpSession();
@@ -121,7 +121,7 @@ public class AuthControllerTest {
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.firstName").value("test_first"));
-    }
+    }*/
 
     @Test
     public void removeSessionTest() throws Exception {

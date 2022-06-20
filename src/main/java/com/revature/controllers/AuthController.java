@@ -60,7 +60,7 @@ public class AuthController {
         }
     }
 
-    @GetMapping("/checkLogin")
+/*    @GetMapping("/checkLogin")
     public ResponseEntity<Integer> checkLogin(HttpSession session) {
         User u = (User) session.getAttribute("user");
 
@@ -71,12 +71,12 @@ public class AuthController {
         } else {
             return ResponseEntity.status(HttpStatus.OK).body(3);
         }
-    }
+    }*/
 
-    @GetMapping("/getUser")
+/*    @GetMapping("/getUser")
     public ResponseEntity<User> getUser(HttpSession session) {
         User u = (User) session.getAttribute("user");
         System.out.println(u.toString());
         return ResponseEntity.status(HttpStatus.OK).body(u);
-    }
+    }*/
 }
